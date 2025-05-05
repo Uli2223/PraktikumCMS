@@ -19,6 +19,13 @@ return new class extends Migration
             $table->string('nomor_telepon');
             $table->timestamps();
         });
+
+        $this->callSeeder();
+    }
+
+    private function callSeeder(): void
+    {
+        (new KaryawanSeeder)->run();
     }
 
     /**
