@@ -45,6 +45,9 @@ return [
         'charset' => 'AL32UTF8',
         'prefix' => '',
         'prefix_schema' => env('DB_SCHEMA_PREFIX', ''),
+        'edition' => env('DB_EDITION', 'ora$base'),
+        'server_version' => env('DB_SERVER_VERSION', ''),
+        'dynamic' => [],
         ],
         'sqlite' => [
             'driver' => 'sqlite',

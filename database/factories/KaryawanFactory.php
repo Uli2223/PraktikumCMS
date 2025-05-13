@@ -17,7 +17,17 @@ class KaryawanFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            // Tidak perlu isi 'id_karyawan' karena auto-increment
+            'nama_karyawan' => $this->faker->name(),
+            'jabatan' => $this->faker->randomElement([
+                'Direktur',
+                'Koki',
+                'Bakery',
+                'Pramusaji',
+                'Kasir',
+            ]),
+            'alamat' => $this->faker->address(),
+            'nomor_telepon' => $this->faker->phoneNumber(),
         ];
     }
 }
