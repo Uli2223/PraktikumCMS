@@ -2,36 +2,26 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Pelanggan extends Model
 {
-    use HasFactory;
-    
-    // Define the table name explicitly
     protected $table = 'pelanggan';
-    
-    // Define primary key
-    protected $primaryKey = 'ID_PELANGGAN';
-    
-    // Disable timestamps (created_at and updated_at)
+    protected $primaryKey = 'id_pelanggan';
     public $timestamps = false;
-    
-    // Define fillable fields
+
+    // Sesuaikan fillable dengan nama kolom di database Anda
     protected $fillable = [
-        'ID_PELANGGAN',
-        'NAMA_PELANGGAN',
-        'ALAMAT',
-        'NOMOR_TELEPON',
-        'RIWAYAT_PEMBELIAN',
-        'ID_KARYAWAN'
+        'nama_pelanggan',  // Sesuaikan dengan nama kolom di database
+        'alamat',          // Sesuaikan dengan nama kolom di database
+        'nomor_telepon',   // Sesuaikan dengan nama kolom di database
+        'membership',      // Sesuaikan dengan nama kolom di database
+        'id_karyawan'      // Sesuaikan dengan nama kolom di database
     ];
-    
-    // You can define relationships here if needed
-    // Example: relationship with Karyawan model
-    public function karyawan()
+
+    // Method ini akan mengizinkan akses melalui $pelanggan->id
+    public function getIdAttribute()
     {
-        return $this->belongsTo(Karyawan::class, 'ID_KARYAWAN', 'id');
+        return $this->attributes['id_pelanggan'];
     }
 }

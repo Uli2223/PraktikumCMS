@@ -1,10 +1,6 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Detail Karyawan</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body>
+@extends('layouts.app')
+
+@section('content')
 <div class="container mt-4">
     <h1>Detail Karyawan</h1>
 
@@ -17,7 +13,6 @@
         </div>
     </div>
 
-<a href="{{ route('karyawan.show', $karyawan->id) }}" class="btn btn-secondary mt-3">Kembali</a>
+    <a href="{{ route('karyawan.index') }}" class="btn btn-secondary mt-3">Kembali</a>
 </div>
-</body>
-</html>
+@endsection
