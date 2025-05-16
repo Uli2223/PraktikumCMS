@@ -2,53 +2,124 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <title>Aplikasi Pelanggan - Flo Bakery</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flo Bakery - @yield('title', 'Sistem Manajemen Toko Roti')</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
     <style>
         body {
-            background-color: #fef7f1;
-            font-family: 'Segoe UI', sans-serif;
-            color: #5a3e2b;
+            background-color: #fff8e1;
+            font-family: 'Roboto', sans-serif;
+            color: #5d4037;
+            line-height: 1.6;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d7ccc8' fill-opacity='0.2'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
         }
+
+        .navbar {
+            background-color: #8d6e63;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            padding: 0;
+        }
+        
+        .navbar a {
+            float: left;
+            color: #fff8e1;
+            text-align: center;
+            padding: 14px 20px;
+            text-decoration: none;
+            font-size: 17px;
+            transition: all 0.3s;
+        }
+        
+        .navbar a:hover {
+            background-color: #a1887f;
+            color: #fff;
+        }
+        
+        .navbar a.active {
+            background-color: #d4a056;
+            color: white;
+        }
+
         header {
-            background-color: #d7b49e;
-            padding: 1rem;
+            background-color: white;
+            padding: 2rem 1rem;
             text-align: center;
-            color: white;
+            color: #5d4037;
             font-weight: bold;
-            font-size: 1.5rem;
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            border-bottom: 2px dashed #d7ccc8;
+            margin-bottom: 2rem;
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23d7ccc8' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
         }
-        footer {
-            background-color: #d7b49e;
-            text-align: center;
-            padding: 1rem;
-            margin-top: 2rem;
-            color: white;
+
+        header p {
+            margin: 10px 0 0;
+            color: #8d6e63;
+            font-size: 18px;
+            font-style: italic;
+            font-family: 'Roboto', sans-serif;
+            font-weight: normal;
         }
+
         .container {
-            background-color: #fffaf4;
-            border-radius: 15px;
+            background-color: white;
+            border-radius: 12px;
             padding: 2rem;
             margin-top: 2rem;
-            box-shadow: 0 0 10px rgba(90, 62, 43, 0.1);
+            margin-bottom: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border: 2px solid #f5f5f5;
         }
-        a, a:hover {
-            color: #8b5e3c;
+
+        footer {
+            text-align: center;
+            padding: 20px 0;
+            color: #8d6e63;
+            border-top: 2px dashed #d7ccc8;
+            background-color: #fcfaf7;
+            box-shadow: 0 -2px 15px rgba(0,0,0,0.05);
+            margin-top: 2rem;
         }
+
         .btn-primary {
-            background-color: #b98563;
-            border-color: #b98563;
+            background-color: #8d6e63;
+            border-color: #8d6e63;
         }
+
         .btn-primary:hover {
-            background-color: #a46c4d;
-            border-color: #a46c4d;
+            background-color: #a1887f;
+            border-color: #a1887f;
+        }
+
+        a, a:hover {
+            color: #8d6e63;
+        }
+
+        @media screen and (max-width: 576px) {
+            .navbar a {
+                float: none;
+                display: block;
+                text-align: left;
+            }
         }
     </style>
 </head>
 <body>
+    <div class="navbar">
+        <a href="{{ route('home') }}" class="{{ request()->routeIs('home') ? 'active' : '' }}">Home</a>
+        <a href="{{ route('pelanggan.index') }}" class="{{ request()->routeIs('pelanggan.*') ? 'active' : '' }}">Pelanggan</a>
+        <a href="{{ route('produk.index') }}" class="{{ request()->routeIs('produk.*') ? 'active' : '' }}">Produk</a>
+        <a href="{{ route('karyawan.index') }}" class="{{ request()->routeIs('karyawan.*') ? 'active' : '' }}">Karyawan</a>
+        <a href="{{ route('pembayaran.index') }}" class="{{ request()->routeIs('pembayaran.*') ? 'active' : '' }}">Transaksi</a>
+    </div>
+    
     <header>
-        Sistem Informasi Pelanggan - Flo Bakery 🍞
+        <h1>@yield('header-title', 'Flo Bakery')</h1>
+        <p>@yield('header-subtitle', 'Sistem Manajemen Toko Roti')</p>
     </header>
 
     <div class="container">
@@ -56,7 +127,9 @@
     </div>
 
     <footer>
-        &copy; {{ date('Y') }} Flo Bakery - Cinta Roti, Cinta Kamu
+        &copy; {{ date('Y') }} Flo Bakery - Cinta Roti, Cinta Kamu. By Nur Rizky Zuliani.
     </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
