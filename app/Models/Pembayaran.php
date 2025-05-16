@@ -6,27 +6,38 @@ use Illuminate\Database\Eloquent\Model;
 
 class Pembayaran extends Model
 {
-    protected $table = 'PEMBAYARAN';
-    protected $primaryKey = 'ID_PEMBAYARAN';
-    public $incrementing = true;
-    protected $keyType = 'integer';
+    protected $table = 'pembayaran';
+    protected $primaryKey = 'id_pembayaran';
     public $timestamps = false;
 
     protected $fillable = [
-        'ID_PEMBAYARAN',
-        'METODE_PEMBAYARAN',
-        'TANGGAL_PEMBAYARAN',
-        'STATUS_PEMBAYARAN',
-        // Tambahkan kolom lain sesuai struktur tabel Anda
-    ];
-    
-    protected $casts = [
-        'ID_PEMBAYARAN' => 'integer',
-        'TANGGAL_PEMBAYARAN' => 'date',
+        'metode_pembayaran',
+        'jumlah_pembayaran',
+        'id_pelanggan',
+        'id_karyawan'
     ];
 
-    public function produks()
+    // Method ini akan mengizinkan akses melalui $pembayaran->id
+    public function getIdAttribute()
     {
-        return $this->hasMany(Produk::class, 'ID_PEMBAYARAN', 'ID_PEMBAYARAN');
+        return $this->attributes['id_pembayaran'];
+    }
+    
+    // Relasi dengan model Pelanggan
+    public function pelanggan()
+    {
+        return $this->belongsTo(Pelanggan::class, 'id_pelanggan', 'id_pelanggan');
+    }
+    
+    // Relasi dengan model Karyawan (jika ada)
+    public function karyawan()
+    {
+        return $this->belongsTo(Karyawan::class, 'id_karyawan', 'id_karyawan');
+    }
+    
+    // Relasi dengan model Produk (one-to-many)
+    public function produk()
+    {
+        return $this->hasMany(Produk::class, 'id_pembayaran', 'id_pembayaran');
     }
 }

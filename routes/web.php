@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\KaryawanController;
 use App\Http\Controllers\PelangganController;
 use App\Http\Controllers\ProdukController;
+use App\Http\Controllers\PembayaranController;
 use Resource\Views;
 
 // Route beranda / home
@@ -52,3 +53,15 @@ Route::get('/produk/{id}/edit', [ProdukController::class, 'edit'])->name('produk
 Route::put('/produk/{id}', [ProdukController::class, 'update'])->name('produk.update');
 Route::get('/produk/{id}/delete', [ProdukController::class, 'confirmDelete'])->name('produk.confirmDelete');
 Route::delete('/produk/{id}', [ProdukController::class, 'destroy'])->name('produk.destroy');
+
+// -------------------
+// PEMBAYARAN
+// -------------------
+Route::get('/pembayaran', [PembayaranController::class, 'index'])->name('pembayaran.index');
+Route::get('/pembayaran/create', [PembayaranController::class, 'create'])->name('pembayaran.create');
+Route::post('/pembayaran', [PembayaranController::class, 'store'])->name('pembayaran.store');
+Route::get('/pembayaran/{id}', [PembayaranController::class, 'show'])->name('pembayaran.show');
+Route::get('/pembayaran/{id}/edit', [PembayaranController::class, 'edit'])->name('pembayaran.edit');
+Route::put('/pembayaran/{id}', [PembayaranController::class, 'update'])->name('pembayaran.update');
+Route::get('/pembayaran/{id}/delete', [PembayaranController::class, 'confirmDelete'])->name('pembayaran.confirmDelete');
+Route::delete('/pembayaran/{id}', [PembayaranController::class, 'destroy'])->name('pembayaran.destroy');

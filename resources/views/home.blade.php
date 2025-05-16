@@ -154,6 +154,7 @@
         <a href="{{ route('pelanggan.index') }}">Pelanggan</a>
         <a href="{{ route('produk.index') }}">Produk</a>
         <a href="{{ route('karyawan.index') }}">Karyawan</a>
+        <a href="{{ route('pembayaran.index') }}">Transaksi</a>
     </div>
     
     <div class="container">
