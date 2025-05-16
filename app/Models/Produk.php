@@ -6,22 +6,23 @@ use Illuminate\Database\Eloquent\Model;
 
 class Produk extends Model
 {
-    protected $table = 'PRODUK';
-    protected $primaryKey = 'ID_PRODUK';
+    protected $table = 'produk';
+    protected $primaryKey = 'id_produk';
     public $timestamps = false;
 
     protected $fillable = [
-        'NAMA',
-        'JENIS',
-        'HARGA',
-        'STOK',
-        'TANGGAL_KADALUWARSA',
-        'DESKRIPSI_PRODUK',
-        'ID_PEMBAYARAN',
+        'nama',
+        'jenis',
+        'harga',
+        'stok',
+        'tanggal_kadaluwarsa',
+        'deskripsi_produk',
+        'id_pembayaran'
     ];
 
-    public function getRouteKeyName()
+    // Method ini akan mengizinkan akses melalui $produk->id
+    public function getIdAttribute()
     {
-        return 'ID_PRODUK';
+        return $this->attributes['id_produk'];
     }
 }
