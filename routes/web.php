@@ -65,3 +65,5 @@ Route::get('/pembayaran/{id}/edit', [PembayaranController::class, 'edit'])->name
 Route::put('/pembayaran/{id}', [PembayaranController::class, 'update'])->name('pembayaran.update');
 Route::get('/pembayaran/{id}/delete', [PembayaranController::class, 'confirmDelete'])->name('pembayaran.confirmDelete');
 Route::delete('/pembayaran/{id}', [PembayaranController::class, 'destroy'])->name('pembayaran.destroy');
+
+
