@@ -1,7 +1,4 @@
-<div class="mb-3">
-    <label>ID Pembayaran</label>
-    <input type="text" name="id_pembayaran" class="form-control" value="{{ old('id_pembayaran', $pembayaran->id_pembayaran ?? '') }}" {{ isset($pembayaran) ? 'readonly' : '' }}>
-</div>
+
 <div class="mb-3">
     <label>Metode Pembayaran</label>
     <select name="metode_pembayaran" class="form-control">

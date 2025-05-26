@@ -9,6 +9,8 @@ class Karyawan extends Model
     protected $table = 'karyawan'; // nama tabel di database
     protected $primaryKey = 'id_karyawan'; // primary key tabel
     public $timestamps = false; // tidak menggunakan timestamps
+    
+    public $incrementing = false;
 
     // Kolom yang bisa diisi
     protected $fillable = [

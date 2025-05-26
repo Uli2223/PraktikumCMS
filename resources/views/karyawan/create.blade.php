@@ -15,25 +15,22 @@
     @endif
 
     <form action="{{ route('karyawan.store') }}" method="POST">
-        @csrf
-        <div class="mb-3">
-            <label>Nama Karyawan</label>
-            <input type="text" name="nama_karyawan" class="form-control" value="{{ old('nama_karyawan') }}">
-        </div>
-        <div class="mb-3">
-            <label>Jabatan</label>
-            <input type="text" name="jabatan" class="form-control" value="{{ old('jabatan') }}">
-        </div>
-        <div class="mb-3">
-            <label>Alamat</label>
-            <textarea name="alamat" class="form-control">{{ old('alamat') }}</textarea>
-        </div>
-        <div class="mb-3">
-            <label>Nomor Telepon</label>
-            <input type="text" name="nomor_telepon" class="form-control" value="{{ old('nomor_telepon') }}">
-        </div>
-        <button type="submit" class="btn btn-primary">Simpan</button>
-        <a href="{{ route('karyawan.index') }}" class="btn btn-secondary">Kembali</a>
+    @csrf
+
+    <label>Nama Karyawan</label>
+    <input type="text" name="nama_karyawan" value="{{ old('nama_karyawan') }}">
+
+    <label>Jabatan</label>
+    <input type="text" name="jabatan" value="{{ old('jabatan') }}">
+
+    <label>Alamat</label>
+    <input type="text" name="alamat" value="{{ old('alamat') }}">
+
+    <label>Nomor Telepon</label>
+    <input type="text" name="nomor_telepon" value="{{ old('nomor_telepon') }}">
+
+    <button type="submit">Simpan</button>
     </form>
+
 </div>
 @endsection

@@ -1,24 +1,20 @@
 <div class="mb-3">
-    <label>ID Pelanggan</label>
-    <input type="text" name="ID_PELANGGAN" class="form-control" value="{{ old('ID_PELANGGAN', $pelanggan->ID_PELANGGAN ?? '') }}" {{ isset($pelanggan) ? 'readonly' : '' }}>
-</div>
-<div class="mb-3">
     <label>Nama</label>
-    <input type="text" name="NAMA_PELANGGAN" class="form-control" value="{{ old('NAMA_PELANGGAN', $pelanggan->NAMA_PELANGGAN ?? '') }}">
+    <input type="text" name="nama_pelanggan" class="form-control" value="{{ old('nama_pelanggan', $pelanggan->nama_pelanggan ?? '') }}">
 </div>
 <div class="mb-3">
     <label>Alamat</label>
-    <textarea name="ALAMAT" class="form-control">{{ old('ALAMAT', $pelanggan->ALAMAT ?? '') }}</textarea>
+    <textarea name="alamat" class="form-control">{{ old('alamat', $pelanggan->alamat ?? '') }}</textarea>
 </div>
 <div class="mb-3">
     <label>Nomor Telepon</label>
-    <input type="text" name="NOMOR_TELEPON" class="form-control" value="{{ old('NOMOR_TELEPON', $pelanggan->NOMOR_TELEPON ?? '') }}">
+    <input type="text" name="nomor_telepon" class="form-control" value="{{ old('nomor_telepon', $pelanggan->nomor_telepon ?? '') }}">
 </div>
 <div class="mb-3">
     <label>Membership</label>
-    <input type="text" name="MEMBERSHIP" class="form-control" value="{{ old('MEMBERSHIP', $pelanggan->MEMBERSHIP ?? '') }}">
+    <input type="text" name="membership" class="form-control" value="{{ old('membership', $pelanggan->membership ?? '') }}">
 </div>
 <div class="mb-3">
     <label>ID Karyawan</label>
-    <input type="text" name="ID_KARYAWAN" class="form-control" value="{{ old('ID_KARYAWAN', $pelanggan->ID_KARYAWAN ?? '') }}">
+    <input type="text" name="id_karyawan" class="form-control" value="{{ old('id_karyawan', $pelanggan->id_karyawan ?? '') }}">
 </div>

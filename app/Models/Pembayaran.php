@@ -10,7 +10,10 @@ class Pembayaran extends Model
     protected $primaryKey = 'id_pembayaran';
     public $timestamps = false;
 
+    public $incrementing = false;
+
     protected $fillable = [
+        'id_pembayaran',
         'metode_pembayaran',
         'jumlah_pembayaran',
         'id_pelanggan',
