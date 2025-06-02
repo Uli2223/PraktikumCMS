@@ -29,6 +29,7 @@ Route::get('/karyawan/{id}/edit', [KaryawanController::class, 'edit'])->name('ka
 Route::put('/karyawan/{id}', [KaryawanController::class, 'update'])->name('karyawan.update');
 Route::get('/karyawan/{id}/delete', [KaryawanController::class, 'confirmDelete'])->name('karyawan.confirmDelete');
 Route::delete('/karyawan/{id}', [KaryawanController::class, 'destroy'])->name('karyawan.destroy');
+Route::get('karyawan/search', [KaryawanController::class, 'search'])->name('karyawan.search');
 
 // -------------------
 // PELANGGAN (pakai resource + tambahan delete confirmation)

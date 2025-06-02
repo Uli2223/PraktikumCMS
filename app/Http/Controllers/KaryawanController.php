@@ -7,11 +7,22 @@ use Illuminate\Http\Request;
 
 class KaryawanController extends Controller
 {
-    public function index()
-    {
+    public function index(Request $request)
+{
+    $search = $request->get('search');
+    
+    if ($search) {
+        $karyawan = Karyawan::where('nama_karyawan', 'LIKE', "%{$search}%")
+                           ->orWhere('jabatan', 'LIKE', "%{$search}%")
+                           ->orWhere('alamat', 'LIKE', "%{$search}%")
+                           ->orWhere('nomor_telepon', 'LIKE', "%{$search}%")
+                           ->get();
+    } else {
         $karyawan = Karyawan::all();
-        return view('karyawan.index', compact('karyawan'));
     }
+    
+    return view('karyawan.index', compact('karyawan', 'search'));
+}
 
     public function create()
     {
@@ -72,4 +83,17 @@ class KaryawanController extends Controller
 
         return redirect()->route('karyawan.index')->with('success', 'Data karyawan berhasil dihapus.');
     }
+
+    public function search(Request $request)
+{
+    $search = $request->get('q');
+    
+    $karyawan = Karyawan::where('nama_karyawan', 'LIKE', "%{$search}%")
+                       ->orWhere('jabatan', 'LIKE', "%{$search}%")
+                       ->orWhere('alamat', 'LIKE', "%{$search}%")
+                       ->orWhere('nomor_telepon', 'LIKE', "%{$search}%")
+                       ->get();
+    
+    return response()->json($karyawan);
+}
 }
