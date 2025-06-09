@@ -8,21 +8,22 @@ use Illuminate\Http\Request;
 class KaryawanController extends Controller
 {
     public function index(Request $request)
-{
-    $search = $request->get('search');
-    
-    if ($search) {
-        $karyawan = Karyawan::where('nama_karyawan', 'LIKE', "%{$search}%")
-                           ->orWhere('jabatan', 'LIKE', "%{$search}%")
-                           ->orWhere('alamat', 'LIKE', "%{$search}%")
-                           ->orWhere('nomor_telepon', 'LIKE', "%{$search}%")
-                           ->get();
-    } else {
-        $karyawan = Karyawan::all();
+    {
+        $search = $request->get('search');
+        
+        if ($search) {
+            // Menggunakan LOWER() untuk case-insensitive search
+            $karyawan = Karyawan::whereRaw('LOWER(nama_karyawan) LIKE LOWER(?)', ["%{$search}%"])
+                               ->orWhereRaw('LOWER(jabatan) LIKE LOWER(?)', ["%{$search}%"])
+                               ->orWhereRaw('LOWER(alamat) LIKE LOWER(?)', ["%{$search}%"])
+                               ->orWhereRaw('LOWER(nomor_telepon) LIKE LOWER(?)', ["%{$search}%"])
+                               ->get();
+        } else {
+            $karyawan = Karyawan::all();
+        }
+        
+        return view('karyawan.index', compact('karyawan', 'search'));
     }
-    
-    return view('karyawan.index', compact('karyawan', 'search'));
-}
 
     public function create()
     {
@@ -83,17 +84,4 @@ class KaryawanController extends Controller
 
         return redirect()->route('karyawan.index')->with('success', 'Data karyawan berhasil dihapus.');
     }
-
-    public function search(Request $request)
-{
-    $search = $request->get('q');
-    
-    $karyawan = Karyawan::where('nama_karyawan', 'LIKE', "%{$search}%")
-                       ->orWhere('jabatan', 'LIKE', "%{$search}%")
-                       ->orWhere('alamat', 'LIKE', "%{$search}%")
-                       ->orWhere('nomor_telepon', 'LIKE', "%{$search}%")
-                       ->get();
-    
-    return response()->json($karyawan);
-}
 }
