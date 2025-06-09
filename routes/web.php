@@ -66,4 +66,7 @@ Route::put('/pembayaran/{id}', [PembayaranController::class, 'update'])->name('p
 Route::get('/pembayaran/{id}/delete', [PembayaranController::class, 'confirmDelete'])->name('pembayaran.confirmDelete');
 Route::delete('/pembayaran/{id}', [PembayaranController::class, 'destroy'])->name('pembayaran.destroy');
 
-
+//Route untuk Middleware CheckAge
+Route::get('/pendaftaran-ktp', function(){
+    return 'Selamat datang di halaman Pendaftaran KTP Online!';
+})->middleware('check.age');
