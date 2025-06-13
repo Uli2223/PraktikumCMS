@@ -6,11 +6,12 @@ use App\Http\Controllers\PelangganController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\PembayaranController;
 use Resource\Views;
+use App\Http\Controllers\ImageController;
 
-// Route beranda / home
-// Route::get('/', function() {
-//     return view('home');
-// });
+
+Route::get('/upload', [ImageController::class, 'create']);
+Route::post('/upload', [ImageController::class, 'store'])->name('image.upload');
+
 
 Route::get('/', function () {
     return view('home');
