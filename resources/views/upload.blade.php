@@ -19,9 +19,22 @@
 </form>
 <!-- Preview Gambar -->
 @if (isset($image))
- <h3>Gambar yang baru diupload:</h3>
- <p><strong>{{ $image->title }}</strong></p>
- <img src="{{ asset('storage/' . $image->image_path) }}" width="200">
+    <h3>Gambar yang baru diupload:</h3>
+    <p><strong>{{ $image->title }}</strong></p>
+    <img src="{{ asset('storage/' . $image->image_path) }}" width="200">
 @endif
+
+@if (isset($image))
+    <h3>Gambar yang baru diupload:</h3>
+    <p><strong>{{ $image->title }}</strong></p>
+    <img src="{{ asset('storage/' . $image->image_path) }}" width="200"><br><br>
+
+    <form action="{{ route('image.destroy', $image->id) }}" method="POST">
+        @csrf
+        @method('DELETE')
+        <button type="submit" onclick="return confirm('Yakin ingin menghapus gambar ini?')">Hapus Gambar</button>
+    </form>
+@endif
+
 </body>
 </html>

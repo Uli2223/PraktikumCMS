@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Image;
+    use Illuminate\Support\Facades\Storage;
 
 
 class ImageController extends Controller
@@ -28,4 +29,19 @@ class ImageController extends Controller
 
     return view('upload', ['image'=>$image])->with('success', 'Gambar berhasil di upload');
     }
+
+
+public function destroy($id)
+{
+    $image = Image::findOrFail($id);
+
+    // Hapus file dari storage
+    Storage::disk('public')->delete($image->image_path);
+
+    // Hapus data dari database
+    $image->delete();
+
+    return redirect('/upload')->with('success', 'Gambar berhasil dihapus.');
+}
+
 }
