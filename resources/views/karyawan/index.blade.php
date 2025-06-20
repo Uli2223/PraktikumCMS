@@ -1,5 +1,11 @@
 @extends('layouts.app')
 
+@if(session('error'))
+    <div class="alert alert-danger">
+        {{ session('error') }}
+    </div>
+@endif
+
 @section('content')
 <div class="container mt-4">
     <h1 class="mb-4 text-center text-dark">Daftar Karyawan</h1>

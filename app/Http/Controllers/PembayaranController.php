@@ -45,8 +45,12 @@ class PembayaranController extends Controller
     
     public function show($id)
     {
-        $pembayaran = Pembayaran::findOrFail($id);
+        try{
+           $pembayaran = Pembayaran::findOrFail($id);
         return view('pembayaran.show', compact('pembayaran'));
+        }catch (\Exception $e) {
+            return redirect()->route('pembayaran.index')->with('error', 'Data Pembayaran tidak ditemukan.');   
+        }    
     }
     
     public function edit($id)

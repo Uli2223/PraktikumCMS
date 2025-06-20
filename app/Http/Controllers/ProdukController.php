@@ -44,8 +44,13 @@ class ProdukController extends Controller
     
     public function show($id)
     {
-        $produk = Produk::findOrFail($id);
+        try{
+            $produk = Produk::findOrFail($id);
         return view('produk.show', compact('produk'));
+        }catch (\Exception $e) {
+            return redirect()->route('produk.index')->with('error', 'Data Produk tidak ditemukan.');
+        }
+        
     }
     
     public function edit($id)

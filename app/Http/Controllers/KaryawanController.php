@@ -46,8 +46,12 @@ class KaryawanController extends Controller
 
     public function show($id)
     {
-        $karyawan = Karyawan::findOrFail($id);
-        return view('karyawan.show', compact('karyawan'));
+        try{
+            $karyawan = Karyawan::findOrFail($id);
+            return view('karyawan.show', compact('karyawan'));
+        }catch (\Exception $e) {
+            return redirect()->route('karyawan.index')->with('error', 'Data Karyawan tidak ditemukan.');   
+        }  
     }
 
     public function edit($id)

@@ -10,19 +10,7 @@ class PelangganController extends Controller
 {
     public function index(){
         try {
-            // Ambil data pelanggan
-            $pelanggan = Pelanggan::all();
-            
-            // Debug: Tampilkan informasi koneksi database
-            // DB::connection()->getPdo();
-            // echo "Database terhubung: ".DB::connection()->getDatabaseName();
-            
-            // Debug: Tampilkan raw data (hapus/komentari untuk production)
-            // $rawPelanggan = DB::select('SELECT * FROM pelanggan');
-            // echo "<pre>";
-            // print_r($rawPelanggan);
-            // echo "</pre>";
-            
+            $pelanggan = Pelanggan::all();  
             return view('pelanggan.index', compact('pelanggan'));
         } catch (\Exception $e) {
             die("Error koneksi database: " . $e->getMessage());
@@ -52,9 +40,14 @@ class PelangganController extends Controller
     
     public function show($id)
     {
-        $pelanggan = Pelanggan::findOrFail($id);
-        return view('pelanggan.show', compact('pelanggan'));
+        try{
+            $pelanggan = Pelanggan::findOrFail($id);
+            return view('pelanggan.show', compact('pelanggan'));
+        }catch (\Exception $e) {
+            return redirect()->route('pelanggan.index')->with('error', 'Data Pelanggan tidak ditemukan.');
+        }
     }
+    
     
     public function edit($id)
     {
