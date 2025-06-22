@@ -32,10 +32,14 @@ class PelangganController extends Controller
             'id_karyawan' => 'required',
         ]);
         
-        Pelanggan::create($request->all());
+        try{
+            Pelanggan::create($request->all());
         
-        return redirect()->route('pelanggan.index')
+            return redirect()->route('pelanggan.index')
             ->with('success', 'Pelanggan berhasil ditambahkan.');
+        }catch (\Exception $e) {
+            return redirect()->route('pelanggan.index')->with('error', 'Data Pelanggan tidak ditemukan.');
+        }
     }
     
     public function show($id)
@@ -51,8 +55,13 @@ class PelangganController extends Controller
     
     public function edit($id)
     {
-        $pelanggan = Pelanggan::findOrFail($id);
-        return view('pelanggan.edit', compact('pelanggan'));
+        try {
+                $pelanggan = Pelanggan::findOrFail($id);
+                return view('pelanggan.edit', compact('pelanggan'));
+        }catch (\Exception $e) {
+            return redirect()->route('pelanggan.index')->with('error', 'Data Pelanggan tidak ditemukan.');
+        }
+       
     }
     
     public function update(Request $request, $id)
@@ -65,25 +74,37 @@ class PelangganController extends Controller
             'id_karyawan' => 'required',
         ]);
         
-        $pelanggan = Pelanggan::findOrFail($id);
+        try{
+            $pelanggan = Pelanggan::findOrFail($id);
         $pelanggan->update($request->all());
         
         return redirect()->route('pelanggan.index')
             ->with('success', 'Pelanggan berhasil diperbarui.');
+        }catch (\Exception $e) {
+            return redirect()->route('pelanggan.index')->with('error', 'Data Pelanggan tidak ditemukan.');
+        }   
     }
     
     public function confirmDelete($id)
     {
-        $pelanggan = Pelanggan::findOrFail($id);
-        return view('pelanggan.confirmDelete', compact('pelanggan'));
+        try {
+                $pelanggan = Pelanggan::findOrFail($id);
+                return view('pelanggan.confirmDelete', compact('pelanggan'));
+        }catch (\Exception $e) {
+            return redirect()->route('pelanggan.index')->with('error', 'Data Pelanggan tidak ditemukan.');
+        }
     }
     
     public function destroy($id)
     {
-        $pelanggan = Pelanggan::findOrFail($id);
-        $pelanggan->delete();
+        try {
+                $pelanggan = Pelanggan::findOrFail($id);
+                $pelanggan->delete();
         
-        return redirect()->route('pelanggan.index')
-            ->with('success', 'Pelanggan berhasil dihapus.');
+                return redirect()->route('pelanggan.index')
+                ->with('success', 'Pelanggan berhasil dihapus.');
+        }catch (\Exception $e) {
+            return redirect()->route('pelanggan.index')->with('error', 'Data Pelanggan tidak ditemukan.');
+        } 
     }
 }
