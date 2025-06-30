@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sistem Manajemen Toko Roti Flo Bakery</title>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Playfair+Display:wght@700&display=swap');
         
@@ -43,6 +44,10 @@
             color: white;
         }
         
+        .navbar-right {
+            float: right;
+        }
+        
         .container {
             max-width: 1200px;
             margin: 20px auto;
@@ -73,6 +78,13 @@
             color: #8d6e63;
             font-size: 20px;
             font-style: italic;
+        }
+        
+        .welcome-message {
+            color: #5d4037;
+            font-size: 16px;
+            font-style: normal;
+            margin-top: 10px;
         }
         
         .dashboard {
@@ -169,6 +181,36 @@
             border-color: #8d6e63;
         }
         
+        .btn-login {
+            background: linear-gradient(135deg, #a1887f, #8d6e63);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(141, 110, 99, 0.3);
+            transition: all 0.3s;
+            display: inline-block;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        
+        .btn-login:hover {
+            background: linear-gradient(135deg, #8d6e63, #a1887f);
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        .about-system {
+            text-align: center;
+            margin-top: 40px;
+            padding: 40px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
         footer {
             text-align: center;
             margin-top: 40px;
@@ -190,7 +232,7 @@
                 width: 100%;
             }
             
-            .navbar a {
+            .navbar a, .navbar-right {
                 float: none;
                 display: block;
                 text-align: left;
@@ -199,73 +241,110 @@
             .header h1 {
                 font-size: 32px;
             }
+            
+            .navbar-right {
+                margin-top: 10px;
+                padding-left: 20px;
+            }
         }
     </style>
 </head>
 <body>
     <div class="navbar">
-        <a href="{{ route('home') }}" class="active">Home</a>
-        <a href="{{ route('pelanggan.index') }}">Pelanggan</a>
-        <a href="{{ route('produk.index') }}">Produk</a>
-        <a href="{{ route('karyawan.index') }}">Karyawan</a>
-        <a href="{{ route('pembayaran.index') }}">Transaksi</a>
+        <a href="{{ route('home') }}" class="{{ request()->routeIs('home') ? 'active' : '' }}">Home</a>
+        @auth
+            <a href="{{ route('pelanggan.index') }}" class="{{ request()->routeIs('pelanggan.*') ? 'active' : '' }}">Pelanggan</a>
+            <a href="{{ route('produk.index') }}" class="{{ request()->routeIs('produk.*') ? 'active' : '' }}">Produk</a>
+            <a href="{{ route('karyawan.index') }}" class="{{ request()->routeIs('karyawan.*') ? 'active' : '' }}">Karyawan</a>
+            <a href="{{ route('pembayaran.index') }}" class="{{ request()->routeIs('pembayaran.*') ? 'active' : '' }}">Transaksi</a>
+        @endauth
+        
+        <div class="navbar-right">
+            @auth
+                <form method="POST" action="{{ route('logout') }}" style="display:inline">
+                    @csrf
+                    <a href="#" onclick="event.preventDefault(); this.closest('form').submit();">Logout</a>
+                </form>
+            @else
+                <a href="{{ route('login') }}">Login</a>
+            @endauth
+        </div>
     </div>
     
     <div class="container">
-        <div class="header">
-            <h1>Toko Roti "Flo Bakery"</h1>
-            <p>Kelola bisnis roti Anda dengan sistem yang seenak produk Anda</p>
-        </div>
-        
-        <div class="dashboard">
-            <div class="card">
-                <div class="card-header">
-                    <h3>Pelanggan</h3>
+        @auth
+            <div class="header">
+                <h1>Toko Roti "Flo Bakery"</h1>
+                <p>Kelola bisnis roti Anda dengan sistem yang seenak produk Anda</p>
+                <p class="welcome-message">Selamat datang, {{ Auth::user()->name }}!</p>
+            </div>
+            
+            <div class="dashboard">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Pelanggan</h3>
+                    </div>
+                    <div class="card-body">
+                        <p>Kenali lebih dekat para penikmat roti Anda. Kelola data pelanggan setia dan tingkatkan pengalaman mereka di toko roti Anda.</p>
+                    </div>
+                    <div class="card-footer">
+                        <a href="{{ route('pelanggan.index') }}">Daftar Pelanggan</a>
+                    </div>
                 </div>
-                <div class="card-body">
-                    <p>Kenali lebih dekat para penikmat roti Anda. Kelola data pelanggan setia dan tingkatkan pengalaman mereka di toko roti Anda.</p>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Produk</h3>
+                    </div>
+                    <div class="card-body">
+                        <p>Sajikan berbagai kreasi roti terbaik! Kelola katalog produk, stok bahan, dan pantau roti-roti favorit pelanggan Anda.</p>
+                    </div>
+                    <div class="card-footer">
+                        <a href="{{ route('produk.index') }}">Katalog Roti</a>
+                    </div>
                 </div>
-                <div class="card-footer">
-                    <a href="{{ route('pelanggan.index') }}">Daftar Pelanggan</a>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Karyawan</h3>
+                    </div>
+                    <div class="card-body">
+                        <p>Tim baker & staff adalah kunci kesuksesan. Kelola jadwal, keahlian, dan data karyawan untuk menciptakan tim yang solid dan produktif.</p>
+                    </div>
+                    <div class="card-footer">
+                        <a href="{{ route('karyawan.index') }}">Tim Bakery</a>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Transaksi</h3>
+                    </div>
+                    <div class="card-body">
+                        <p>Catat setiap penjualan dengan rapi. Lacak pendapatan harian, analisis tren penjualan, dan ketahui produk roti paling laris Anda.</p>
+                    </div>
+                    <div class="card-footer">
+                        <a href="{{ route('pembayaran.index') }}">Penjualan</a>
+                    </div>
+                </div>
+            </div>
+        @else
+            <div class="header">
+                <h1>Toko Roti "Flo Bakery"</h1>
+                <p>Sistem Manajemen Toko Roti Profesional</p>
+                <div style="margin-top:30px">
+                    <a href="{{ route('login') }}" class="btn-login">Login untuk Mengakses Sistem</a>
                 </div>
             </div>
             
-            <div class="card">
-                <div class="card-header">
-                    <h3>Produk</h3>
-                </div>
-                <div class="card-body">
-                    <p>Sajikan berbagai kreasi roti terbaik! Kelola katalog produk, stok bahan, dan pantau roti-roti favorit pelanggan Anda.</p>
-                </div>
-                <div class="card-footer">
-                    <a href="{{ route('produk.index') }}">Katalog Roti</a>
-                </div>
+            <div class="about-system">
+                <h2 style="color:#5d4037; font-family:'Playfair Display', serif;">Tentang Sistem Kami</h2>
+                <p style="color:#6d4c41; max-width:800px; margin:0 auto;">
+                    Sistem Manajemen Toko Roti Flo Bakery membantu Anda mengelola pelanggan, produk, karyawan, 
+                    dan transaksi dengan mudah. Login untuk mengakses fitur lengkap sistem kami.
+                </p>
             </div>
-            
-            <div class="card">
-                <div class="card-header">
-                    <h3>Karyawan</h3>
-                </div>
-                <div class="card-body">
-                    <p>Tim baker & staff adalah kunci kesuksesan. Kelola jadwal, keahlian, dan data karyawan untuk menciptakan tim yang solid dan produktif.</p>
-                </div>
-                <div class="card-footer">
-                    <a href="{{ route('karyawan.index') }}">Tim Bakery</a>
-                </div>
-            </div>
-            
-            <div class="card">
-                <div class="card-header">
-                    <h3>Transaksi</h3>
-                </div>
-                <div class="card-body">
-                    <p>Catat setiap penjualan dengan rapi. Lacak pendapatan harian, analisis tren penjualan, dan ketahui produk roti paling laris Anda.</p>
-                </div>
-                <div class="card-footer">
-                    <a href="{{ route('pembayaran.index') }}">Penjualan</a>
-                </div>
-            </div>
-        </div>
+        @endauth
     </div>
     
     <footer>

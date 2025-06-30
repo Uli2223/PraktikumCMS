@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Flo Bakery - @yield('title', 'Sistem Manajemen Toko Roti')</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
@@ -40,6 +41,14 @@
         .navbar a.active {
             background-color: #d4a056;
             color: white;
+        }
+
+        .navbar-right {
+            float: right;
+        }
+
+        .navbar-right a {
+            display: inline-block;
         }
 
         header {
@@ -95,8 +104,26 @@
             border-color: #a1887f;
         }
 
+        .btn-login {
+            background-color: #d4a056;
+            border-color: #d4a056;
+            color: white;
+        }
+
+        .btn-login:hover {
+            background-color: #e0b878;
+            border-color: #e0b878;
+        }
+
         a, a:hover {
             color: #8d6e63;
+        }
+
+        .welcome-message {
+            color: #5d4037;
+            font-size: 16px;
+            margin-top: 10px;
+            font-style: normal;
         }
 
         @media screen and (max-width: 576px) {
@@ -105,24 +132,74 @@
                 display: block;
                 text-align: left;
             }
+            
+            .navbar-right {
+                float: none;
+                text-align: left;
+            }
         }
     </style>
 </head>
 <body>
     <div class="navbar">
         <a href="{{ route('home') }}" class="{{ request()->routeIs('home') ? 'active' : '' }}">Home</a>
-        <a href="{{ route('pelanggan.index') }}" class="{{ request()->routeIs('pelanggan.*') ? 'active' : '' }}">Pelanggan</a>
-        <a href="{{ route('produk.index') }}" class="{{ request()->routeIs('produk.*') ? 'active' : '' }}">Produk</a>
-        <a href="{{ route('karyawan.index') }}" class="{{ request()->routeIs('karyawan.*') ? 'active' : '' }}">Karyawan</a>
-        <a href="{{ route('pembayaran.index') }}" class="{{ request()->routeIs('pembayaran.*') ? 'active' : '' }}">Transaksi</a>
+        
+        @auth
+            <!-- Menu yang hanya muncul setelah login -->
+            <a href="{{ route('pelanggan.index') }}" class="{{ request()->routeIs('pelanggan.*') ? 'active' : '' }}">Pelanggan</a>
+            <a href="{{ route('produk.index') }}" class="{{ request()->routeIs('produk.*') ? 'active' : '' }}">Produk</a>
+            <a href="{{ route('karyawan.index') }}" class="{{ request()->routeIs('karyawan.*') ? 'active' : '' }}">Karyawan</a>
+            <a href="{{ route('pembayaran.index') }}" class="{{ request()->routeIs('pembayaran.*') ? 'active' : '' }}">Transaksi</a>
+        @endauth
+        
+        <div class="navbar-right">
+            @auth
+                <span style="color: #fff8e1; padding: 14px 20px; display: inline-block;">
+                    Halo, {{ Auth::user()->name }}
+                </span>
+                <form method="POST" action="{{ route('logout') }}" style="display: inline;">
+                    @csrf
+                    <a href="#" onclick="event.preventDefault(); this.closest('form').submit();" 
+                       style="background-color: #d4a056; border-radius: 4px; margin-right: 10px;">
+                        Logout
+                    </a>
+                </form>
+            @else
+                <a href="{{ route('login') }}" class="btn-login" style="border-radius: 4px; margin-right: 10px;">
+                    Login
+                </a>
+                @if(Route::has('register'))
+                    <a href="{{ route('register') }}" style="margin-right: 10px;">
+                        Register
+                    </a>
+                @endif
+            @endauth
+        </div>
     </div>
     
     <header>
         <h1>@yield('header-title', 'Flo Bakery')</h1>
         <p>@yield('header-subtitle', 'Sistem Manajemen Toko Roti')</p>
+        @auth
+            <p class="welcome-message">Selamat datang kembali di sistem manajemen toko roti Anda!</p>
+        @endauth
     </header>
 
     <div class="container">
+        @if(session('success'))
+            <div class="alert alert-success alert-dismissible fade show">
+                {{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
+        
+        @if(session('error'))
+            <div class="alert alert-danger alert-dismissible fade show">
+                {{ session('error') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
+        
         @yield('content')
     </div>
 
@@ -131,5 +208,6 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    @stack('scripts')
 </body>
 </html>
