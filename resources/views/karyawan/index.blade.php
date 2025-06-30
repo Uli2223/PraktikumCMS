@@ -17,7 +17,7 @@
                 <input type="text" 
                        name="search" 
                        class="form-control me-2" 
-                       placeholder="Cari karyawan... (tidak case sensitive)" 
+                       placeholder="Cari karyawan... (nama, jabatan, alamat, telepon, atau ID)" 
                        value="{{ request('search') }}">
                 <button type="submit" class="btn btn-outline-primary">Cari</button>
                 @if(request('search'))

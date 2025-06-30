@@ -10,7 +10,7 @@ class Pelanggan extends Model
     protected $primaryKey = 'id_pelanggan';
     public $timestamps = false;
 
-    public $incrementing = false;
+    public $incrementing = true;
 
     // Sesuaikan fillable dengan nama kolom di database Anda
     protected $fillable = [

@@ -26,20 +26,43 @@ class ProdukController extends Controller
     
     public function store(Request $request)
     {
-        $request->validate([
-            'nama' => 'required',
-            'jenis' => 'required',
-            'harga' => 'required|numeric',
-            'stok' => 'required|numeric',
+        $validated = $request->validate([
+            'nama' => 'required|string|max:255',
+            'jenis' => 'required|string|max:255',
+            'harga' => 'required|numeric|min:0',
+            'stok' => 'required|integer|min:0',
             'tanggal_kadaluwarsa' => 'nullable|date',
-            'deskripsi_produk' => 'nullable',
-            'id_pembayaran' => 'nullable|numeric',
+            'deskripsi_produk' => 'nullable|string',
+            'id_pembayaran' => 'nullable|exists:pembayaran,id_pembayaran'
         ]);
-        
-        Produk::create($request->all());
-        
-        return redirect()->route('produk.index')
-            ->with('success', 'Produk berhasil ditambahkan.');
+
+        try {
+            // Hanya ambil field yang diisi
+            $data = $request->only([
+                'nama',
+                'jenis',
+                'harga',
+                'stok',
+                'tanggal_kadaluwarsa',
+                'deskripsi_produk',
+                'id_pembayaran'
+            ]);
+
+            // Konversi format tanggal jika perlu
+            if (!empty($data['tanggal_kadaluwarsa'])) {
+                $data['tanggal_kadaluwarsa'] = date('Y-m-d', strtotime($data['tanggal_kadaluwarsa']));
+            }
+
+            Produk::create($data);
+
+            return redirect()->route('produk.index')
+                ->with('success', 'Produk berhasil ditambahkan');
+
+        } catch (\Exception $e) {
+            return redirect()->back()
+                ->withInput()
+                ->with('error', 'Gagal menambah produk: ' . $e->getMessage());
+        }
     }
     
     public function show($id)
@@ -83,7 +106,7 @@ class ProdukController extends Controller
         $produk = Produk::findOrFail($id);
         return view('produk.confirmDelete', compact('produk'));
     }
-    
+
     public function destroy($id)
     {
         $produk = Produk::findOrFail($id);

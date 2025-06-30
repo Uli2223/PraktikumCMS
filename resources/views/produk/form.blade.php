@@ -1,8 +1,4 @@
 <div class="mb-3">
-    <label>ID Produk</label>
-    <input type="text" name="id_produk" class="form-control" value="{{ old('id_produk', $produk->id_produk ?? '') }}" {{ isset($produk) ? 'readonly' : '' }}>
-</div>
-<div class="mb-3">
     <label>Nama</label>
     <input type="text" name="nama" class="form-control" value="{{ old('nama', $produk->nama ?? '') }}">
 </div>

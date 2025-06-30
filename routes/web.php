@@ -37,7 +37,8 @@ Route::middleware(['auth'])->group(function () {
     // Pelanggan
     Route::resource('pelanggan', PelangganController::class)->except(['destroy']);
     Route::get('pelanggan/{id}/delete', [PelangganController::class, 'confirmDelete'])->name('pelanggan.confirmDelete');
-    Route::delete('pelanggan/{id}', [PelangganController::class, 'destroy'])->name('pelanggan.destroy');
+    Route::delete('pelanggan/{id_pelanggan}', [PelangganController::class, 'destroy'])
+    ->name('pelanggan.destroy');
     
     // Produk
     Route::resource('produk', ProdukController::class)->except(['destroy']);

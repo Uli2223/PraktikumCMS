@@ -9,6 +9,7 @@ class Produk extends Model
     protected $table = 'produk';
     protected $primaryKey = 'id_produk';
     public $timestamps = false;
+    public $incrementing = true;
 
     protected $fillable = [
         'nama',

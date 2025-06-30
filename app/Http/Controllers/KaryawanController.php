@@ -10,18 +10,24 @@ class KaryawanController extends Controller
     public function index(Request $request)
     {
         $search = $request->get('search');
-        
+
+        $query = Karyawan::query()->orderBy('id_karyawan', 'asc'); // Tambahkan pengurutan disini
+
         if ($search) {
-            // Menggunakan LOWER() untuk case-insensitive search
-            $karyawan = Karyawan::whereRaw('LOWER(nama_karyawan) LIKE LOWER(?)', ["%{$search}%"])
-                               ->orWhereRaw('LOWER(jabatan) LIKE LOWER(?)', ["%{$search}%"])
-                               ->orWhereRaw('LOWER(alamat) LIKE LOWER(?)', ["%{$search}%"])
-                               ->orWhereRaw('LOWER(nomor_telepon) LIKE LOWER(?)', ["%{$search}%"])
-                               ->get();
-        } else {
-            $karyawan = Karyawan::all();
+            $query->where(function($q) use ($search) {
+                $q->whereRaw('LOWER(nama_karyawan) LIKE LOWER(?)', ["%{$search}%"])
+                ->orWhereRaw('LOWER(jabatan) LIKE LOWER(?)', ["%{$search}%"])
+                ->orWhereRaw('LOWER(alamat) LIKE LOWER(?)', ["%{$search}%"])
+                ->orWhereRaw('LOWER(nomor_telepon) LIKE LOWER(?)', ["%{$search}%"]);
+            });
+
+            if (is_numeric($search)) {
+                $query->orWhere('id_karyawan', $search);
+            }
         }
-        
+
+        $karyawan = $query->get();
+
         return view('karyawan.index', compact('karyawan', 'search'));
     }
 

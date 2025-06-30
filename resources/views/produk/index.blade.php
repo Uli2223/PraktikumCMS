@@ -38,11 +38,23 @@
                 <td>{{ $item->deskripsi_produk }}</td>
                 <td>{{ $item->id_pembayaran }}</td>
                 <td>
-                    <a href="{{ route('produk.show', $item->id_produk) }}" class="btn btn-info btn-sm">Detail</a>
-                    <a href="{{ route('produk.edit', $item->id_produk) }}" class="btn btn-warning btn-sm">Edit</a>
-                    <a href="{{ route('produk.confirmDelete', $item->id_produk) }}" class="btn btn-danger btn-sm">Hapus</a>
-                </td>
-            </tr>
+                        <div class="btn-group" role="group">
+                            <a href="{{ route('produk.show', $item->id_produk) }}" 
+                            class="btn btn-info btn-sm mx-1">
+                            <i class="fas fa-eye"></i> Detail
+                            </a>
+                            <a href="{{ route('produk.edit', $item->id_produk) }}" 
+                            class="btn btn-warning btn-sm mx-1">
+                            <i class="fas fa-edit"></i> Edit
+                            </a>
+                            <a href="{{ route('produk.confirmDelete', $item->id_produk) }}" 
+                            class="btn btn-danger btn-sm mx-1"
+                            onclick="return confirm('Yakin hapus produk ini?')">
+                            <i class="fas fa-trash"></i> Hapus
+                            </a>
+                        </div>
+                    </td>
+                </tr>
             @endforeach
         @else
             <tr>

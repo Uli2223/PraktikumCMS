@@ -36,7 +36,11 @@
                 <td>
                     <a href="{{ route('pelanggan.show', $item->id_pelanggan) }}" class="btn btn-info btn-sm">Detail</a>
                     <a href="{{ route('pelanggan.edit', $item->id_pelanggan) }}" class="btn btn-warning btn-sm">Edit</a>
-                    <a href="{{ route('pelanggan.confirmDelete', $item->id_pelanggan) }}" class="btn btn-danger btn-sm">Hapus</a>
+                    <a href="{{ route('pelanggan.confirmDelete', $item->id_pelanggan) }}" 
+                        class="btn btn-danger btn-sm"
+                        onclick="return confirm('Yakin hapus pelanggan ini?')">
+                        <i class="fas fa-trash"></i> Hapus
+                        </a>
                 </td>
             </tr>
             @endforeach

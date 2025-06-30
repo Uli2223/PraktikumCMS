@@ -87,24 +87,49 @@ class PelangganController extends Controller
     
     public function confirmDelete($id)
     {
-        try {
-                $pelanggan = Pelanggan::findOrFail($id);
-                return view('pelanggan.confirmDelete', compact('pelanggan'));
-        }catch (\Exception $e) {
-            return redirect()->route('pelanggan.index')->with('error', 'Data Pelanggan tidak ditemukan.');
+        $pelanggan = Pelanggan::find($id);
+        
+        if(!$pelanggan) {
+            return redirect()->route('pelanggan.index')
+                ->with('error', 'Data pelanggan tidak ditemukan');
         }
+        
+        $relatedCount = DB::table('pembayaran')
+                        ->where('id_pelanggan', $id)
+                        ->count();
+        
+        return view('pelanggan.confirmDelete', [
+            'pelanggan' => $pelanggan,
+            'relatedCount' => $relatedCount
+        ]);
     }
     
-    public function destroy($id)
+   public function destroy($id)
     {
+        DB::beginTransaction();
         try {
-                $pelanggan = Pelanggan::findOrFail($id);
-                $pelanggan->delete();
-        
-                return redirect()->route('pelanggan.index')
-                ->with('success', 'Pelanggan berhasil dihapus.');
-        }catch (\Exception $e) {
-            return redirect()->route('pelanggan.index')->with('error', 'Data Pelanggan tidak ditemukan.');
-        } 
+            // 1. Hapus dulu semua data terkait
+            DB::table('pembayaran')
+            ->where('id_pelanggan', $id)
+            ->delete();
+            
+            // 2. Baru hapus pelanggan
+            $pelanggan = Pelanggan::where('id_pelanggan', $id)->first();
+            
+            if(!$pelanggan) {
+                return redirect()->back()->with('error', 'Data pelanggan tidak ditemukan');
+            }
+            
+            $pelanggan->delete();
+            
+            DB::commit();
+            return redirect()->route('pelanggan.index')
+                ->with('success', 'Pelanggan berhasil dihapus');
+                
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->back()
+                ->with('error', 'Gagal menghapus: ' . $e->getMessage());
+        }
     }
 }
