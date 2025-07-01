@@ -36,19 +36,17 @@ return [
     'connections' => [
         'oracle' => [
             'driver' => 'oracle',
-            'tns' => env('DB_TNS', ''),
             'host' => env('DB_HOST', 'localhost'),
             'port' => env('DB_PORT', '1521'),
             'database' => env('DB_DATABASE', 'XE'),
             'service_name' =>env('DB_SERVICE_NAME',''),
-            'username' => env('DB_USERNAME', 'system'),
-            'password' => env('DB_PASSWORD', ''),
+            'username' => env('DB_USERNAME', 'c##projectddp'),
+            'password' => env('DB_PASSWORD', '2223'),
             'charset' => 'AL32UTF8',
             'prefix' => '',
-            'prefix_schema' => env('DB_SCHEMA_PREFIX', ''),
+            'prefix_schema' => env('DB_SCHEMA_PREFIX', 'c##projectddp'),
             'edition' => env('DB_EDITION', 'ora$base'),
             'server_version' => env('DB_SERVER_VERSION', '11g'),
-            'load_balance' => env('DB_LOAD_BALANCE', 'yes'),
             'dynamic' => [],
         ],
         'sqlite' => [

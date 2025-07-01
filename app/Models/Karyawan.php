@@ -25,4 +25,9 @@ class Karyawan extends Model
     {
         return $this->attributes['id_karyawan'];
     }
+
+    public function user()
+    {
+        return $this->hasOne(User::class, 'id_karyawan', 'id_karyawan');
+    }
 }
