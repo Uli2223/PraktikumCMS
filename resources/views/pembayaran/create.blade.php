@@ -9,5 +9,7 @@
         <button type="submit" class="btn btn-primary">Simpan</button>
         <a href="{{ route('pembayaran.index') }}" class="btn btn-secondary">Batal</a>
     </form>
+    
 </div>
+
 @endsection

@@ -46,9 +46,12 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('produk/{id}', [ProdukController::class, 'destroy'])->name('produk.destroy');
     
     // Pembayaran
+    // Pembayaran
     Route::resource('pembayaran', PembayaranController::class)->except(['destroy']);
     Route::get('pembayaran/{id}/delete', [PembayaranController::class, 'confirmDelete'])->name('pembayaran.confirmDelete');
     Route::delete('pembayaran/{id}', [PembayaranController::class, 'destroy'])->name('pembayaran.destroy');
+    Route::get('pembayaran/{id}/edit', [PembayaranController::class, 'edit'])
+        ->name('pembayaran.edit');
     
     // Middleware CheckAge
     Route::get('/pendaftaran-ktp', function(){
