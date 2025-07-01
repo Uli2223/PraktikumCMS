@@ -331,7 +331,7 @@
         @else
             <div class="header">
                 <h1>Toko Roti "Flo Bakery"</h1>
-                <p>Sistem Manajemen Toko Roti Profesional</p>
+                <p>Sistem Manajemen Toko Roti Flo Bakery</p>
                 <div style="margin-top:30px">
                     <a href="{{ route('login') }}" class="btn-login">Login untuk Mengakses Sistem</a>
                 </div>
